@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: Admin
+Build-Jdk: 15.0.1
+Implementation-Title: netflix-zuul-api-gateway-server
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.in28minutes.microservices
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: https://spring.io/projects/spring-boot/netflix-zuul-
+ api-gateway-server
+Created-By: Maven Integration for Eclipse
+
