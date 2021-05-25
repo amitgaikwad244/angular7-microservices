@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import brave.sampler.Sampler;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
@@ -17,13 +19,8 @@ public class MicroserviceCourseManagementApplication {
 		SpringApplication.run(MicroserviceCourseManagementApplication.class, args);
 	}
 	
-@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
-			}
-		};
+	@Bean
+	public Sampler defaultSampler(){
+		return Sampler.ALWAYS_SAMPLE;
 	}
 }

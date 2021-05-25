@@ -21,20 +21,25 @@ public class ZuulLoggingFilter extends ZuulFilter{
 
 	@Override
 	public Object run() {
+		RequestContext ctx = RequestContext.getCurrentContext();
+		ctx.getResponse();
 		HttpServletRequest request = 
 				RequestContext.getCurrentContext().getRequest();
-		logger.info("request -> {} request uri -> {}", 
-				request, request.getRequestURI());
+		logger.info("response -> {} request uri -> {}", 
+				ctx.getResponse().getClass().toString(), request.getRequestURI());
+		
+		//ctx.unset();
 		return null;
 	}
 
 	@Override
 	public String filterType() {
-		return "pre";
+		return "post";
 	}
 
 	@Override
 	public int filterOrder() {
-		return 1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -8,7 +8,7 @@ import { JWTToken } from '../model/JWTToken';
 })
 export class AuthenticationService {
 
-  BASE_PATH = 'http://localhost:8082/service';
+  // BASE_PATH = 'http://localhost:8082/service';
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser';
 
   public username: String;
@@ -18,17 +18,17 @@ export class AuthenticationService {
 
   }
 
-  executeJwtAuthenticationService(username, password) {
-    console.log(username);
-    return this.http.post(`${this.BASE_PATH}/authenticate`, {
-      username,
-      password
-    }).pipe(map((res: JWTToken) => {
-      this.username = username;
-      this.token = res.token;
-      this.registerSuccessfulLoginForJwt(username);
-    }));
-  }
+  // executeJwtAuthenticationService(username, password) {
+  //   console.log(username);
+  //   return this.http.post(`${this.BASE_PATH}/authenticate`, {
+  //     username,
+  //     password
+  //   }).pipe(map((res: JWTToken) => {
+  //     this.username = username;
+  //     this.token = res.token;
+  //     this.registerSuccessfulLoginForJwt(username);
+  //   }));
+  // }
 
   createJWTToken(token) {
     return 'Bearer ' + token

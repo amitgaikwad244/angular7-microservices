@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from '../model/user';
 import { AuthenticationService } from '../service/authentication.service';
+import { HttpDataService } from '../service/http/http-data-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,16 +11,16 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  username = 'in28minutes';
-  password = '';
-  errorMessage = 'Invalid Credentials';
+  user: User = new User();
+  errorMessage :string;
   invalidLogin = false;
   loginSuccess = false;
   returnUrl: string;
-
+  public token: String;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private http: HttpDataService,
     private authenticationService: AuthenticationService) { 
 
     }
@@ -28,17 +30,29 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/courses';
   }
 
-  handleLogin() {
-    this.authenticationService.executeJwtAuthenticationService(this.username, this.password).subscribe((res) => {
+
+   login() {
+   this.http
+   .post('service/authenticate', {
+   username: this.user.username,
+   password: this.user.password
+   })
+   .subscribe(
+     res => {
       this.invalidLogin = false;
       this.loginSuccess = true;
-      this.router.navigate([this.returnUrl]);
-    }, () => {
+      console.log('response=========',res['token']);
+      this.authenticationService.token = res['token'];
+      this.authenticationService.registerSuccessfulLoginForJwt(this.user.username);
+      this.router.navigateByUrl('courses');
+     },
+     err => {
       this.invalidLogin = true;
       this.loginSuccess = false;
-    });
-    
+     },
+     () => {
       
-  }
-
+     }
+   );
+    }
 }

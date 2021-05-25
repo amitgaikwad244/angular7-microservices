@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 import { CourseService } from '../service/course.service';
+import { HttpDataService } from '../service/http/http-data-service.service';
 
 @Component({
   selector: 'app-courses',
@@ -13,13 +14,24 @@ export class CoursesComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private http: HttpDataService,
     private authenticationService: AuthenticationService,
     private courseService: CourseService) { }
 
   ngOnInit() {
-    this.courseService.retrieveAllCourses(this.authenticationService.username).subscribe(courses => {
-      this.courses = courses;
-    });
+    this.http
+    .post('service/registration', {
+      username:"test",password:"test",name:"test"
+    })
+    .subscribe(
+      res => {
+       console.log('response=========',res);
+      },
+      err => {
+      },
+      () => {
+      }
+    );
   }
 
 }
